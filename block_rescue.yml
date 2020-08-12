@@ -1,0 +1,23 @@
+#Derek Calzadillas was here
+---
+- name: demo block rescue always structure
+  hosts: region,!prod
+  tasks:
+    - name: demonstrate block rescue always
+      block:
+      - name: block | try to rm the meminfo file 
+        file:
+          path: /proc/meminfo
+          state: absent
+      rescue: 
+      - name: rescue | create important file
+        copy:
+          content: IMPORTANT STUFF
+          dest: /tmp/IMPORTANT
+          force: yes
+      always:
+      - name: always | check the host
+        hostname:
+          name: region
+
+          
